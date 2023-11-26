@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+<div id="calcula">
+   <h2>calculadora</h2>
+  </div>
+<div id ="obejto">
+<input type="text" id="display" placeholder="Expressão">
+<br>
+<button onclick="limpar()">C</button>
+<button onclick="apagar()">←</button>
+<button onclick="adicionar('+')">+</button>
+<button onclick="adicionar('-')">-</button>
+<br>
+<button onclick="adicionar('7')">7</button>
+<button onclick="adicionar('8')">8</button>
+<button onclick="adicionar('9')">9</button>
+<button onclick="adicionar('*')">*</button>
+<br>
+<button onclick="adicionar('4')">4</button>
+<button onclick="adicionar('5')">5</button>
+<button onclick="adicionar('6')">6</button>
+  <button onclick="adicionar('/')">/</button>
+ <br>
+  <button onclick="adicionar('1')">1</button>
+  <button onclick="adicionar('2')">2</button>
+  <button onclick="adicionar('3')">3</button>
+   <button onclick="calcular()">=</button>
+</div>
+</body>
+<script>
+    function adicionar(valor){
+        document.getElementById("display").value += valor;
+    }
+    function limpar(){
+        document.getElementById("display").value ='';
+
+    }
+    function apagar(){
+        let expresassao = document.getElementById("display").value;
+        document.getElementById('display').value = expresassao.slice(0,-1);
+
+    }
+    function calcular(){
+        var expresassao = document.getElementById("display").value;
+        try{
+            var resultado = eval(expresassao)
+            document.getElementById('display').value = resultado;
+        }
+        catch(error){
+            document.getElementById('display').value = 'erro';
+
+
+        }
+    }
+</script>
+<style>
+    body,html{
+        overflow: hidden;
+        background:linear-gradient(55deg,black,crimson) ;
+    }
+    button{
+        
+        height: 66px;
+        margin-top: 8px;
+        margin-left:7% ;
+        border-radius: 3px;
+    }
+  #obejto{
+    
+    height: 54%;
+    position: absolute;
+        background-size: 66px; ;
+        background-color: black;
+        top: 50%;
+       
+        left: 50%;
+       
+    }
+    #calcula{
+        position: absolute;
+        top: 40%;
+        left: 49%;
+    }input{
+        height: 9%;
+    }
+</style>
+</html>

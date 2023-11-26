@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Adicione suas tags meta e de estilo aqui -->
+    <title>Registro</title>
+</head>
+<body>
+    <h1>Criar Conta</h1>
+    <form id="signupForm">
+        <label for="email">Email:</label>
+        <input type="email" id="email" required>
+
+        <label for="password">Senha:</label>
+        <input type="password" id="password" required>
+
+        <button type="submit">Registrar</button>
+    </form>
+
+    <script>
+        <!-- Adicione isso dentro da tag head ou body -->
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
+
+<script>
+    // Configuração do Firebase
+    const firebaseConfig = {
+        apiKey: "YOUR_API_KEY",
+        authDomain: "YOUR_AUTH_DOMAIN",
+        projectId: "YOUR_PROJECT_ID",
+        storageBucket: "YOUR_STORAGE_BUCKET",
+        messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+        appId: "YOUR_APP_ID"
+    };
+
+    // Inicialize o Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    // Referência para o serviço de autenticação do Firebase
+    const auth = firebase.auth();
+
+    // Referência para o Firestore (banco de dados)
+    const db = firebase.firestore();
+
+    // Manipulador de envio de formulário
+    document.getElementById('signupForm').addEventListener('submit', function (event) {
+        event.preventDefault(); // Impede o envio padrão do formulário
+
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        // Crie um usuário no Firebase Authentication
+        auth.createUserWithEmailAndPassword(email, password)
+            .then((userCredential) => {
+                // Usuário criado com sucesso
+                const user = userCredential.user;
+
+                // Adicione informações adicionais ao Firestore, se necessário
+                db.collection('users').doc(user.uid).set({
+                    email: user.email,
+                    // Outros dados que você deseja salvar
+                })
+                .then(() => {
+                    console.log('Usuário registrado com sucesso e dados salvos no Firestore!');
+                })
+                .catch((error) => {
+                    console.error('Erro ao salvar dados no Firestore:', error);
+                });
+            })
+            .catch((error) => {
+                console.error('Erro ao criar usuário:', error);
+            });
+    });
+</script>
+
+    </script>
+</body>
+</html>
